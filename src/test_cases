@@ -1,0 +1,139 @@
+#If the user doesn’t have income, vehicles or houses, she is ineligible for disability, auto, and home insurance, respectively.
+test_case_1: user does not have income
+{
+    "age": 35,
+    "dependents": 2,
+    "house": {"ownership_status": "owned"},
+    "income": 0,
+    "marital_status": "married",
+    "risk_questions": [0, 1, 0],
+    "vehicle": {"year": 2018}
+}
+expect disability to be ineligible
+
+test_case_2: user does not have vehicles
+{
+    "age": 35,
+    "dependents": 2,
+    "house": {"ownership_status": "owned"},
+    "income": 0,
+    "marital_status": "married",
+    "risk_questions": [0, 1, 0],
+    "vehicle": null
+}
+expect auto to be ineligible
+
+test_case_3: user does not have houses
+{
+    "age": 35,
+    "dependents": 2,
+    "house": null,
+    "income": 0,
+    "marital_status": "married",
+    "risk_questions": [0, 1, 0],
+    "vehicle": {"year": 2018}
+}
+expect home to be ineligible
+
+#If the user is over 60 years old, she is ineligible for disability and life insurance.
+test_case_4: user age is greater than 60
+{
+    "age": 61,
+    "dependents": 2,
+    "house": {"ownership_status": "owned"},
+    "income": 200,
+    "marital_status": "married",
+    "risk_questions": [0, 1, 0],
+    "vehicle": {"year": 2018}
+}
+expect disability and life to be ineligible
+
+#If the user is under 30 years old, deduct 2 risk points from all lines of insurance. If she is between 30 and 40 years old, deduct 1.
+test_case_5: user age is less than 30
+{
+    "age": 29,
+    "dependents": 2,
+    "house": {"ownership_status": "owned"},
+    "income": 200,
+    "marital_status": "married",
+    "risk_questions": [0, 1, 0],
+    "vehicle": {"year": 2018}
+}
+expect risk_score to be equals to 1
+
+test_case_6: user age is 35
+{
+    "age": 35,
+    "dependents": 2,
+    "house": {"ownership_status":"owned"},
+    "income": 500,
+    "marital_status": "married",
+    "risk_questions": [1, 1, 1],
+    "vehicle": {"year": 2000}
+}
+expect risk_score to be equals to 2
+
+#If her income is above $200k, deduct 1 risk point from all lines of insurance.
+test_case_7: user income is greater than 200000
+{
+    "age": 29,
+    "dependents": 2,
+    "house": {"ownership_status":"owned"},
+    "income": 201000,
+    "marital_status": "married",
+    "risk_questions": [1, 1, 1],
+    "vehicle": {"year": 2000}
+}
+expect risk_score to be equals to 2
+
+#If the user's house is mortgaged, add 1 risk point to her home score and add 1 risk point to her disability score.
+test_case_8: user house is mortgaged
+{
+    "age": 29,
+    "dependents": 2,
+    "house": {"ownership_status":"mortgaged"},
+    "income": 500,
+    "marital_status": "married",
+    "risk_questions": [1, 1, 1],
+    "vehicle": {"year": 2000}
+}
+expect home risk_score to be equals to 4 and disability risk_score to be equals to 4
+
+#If the user has dependents, add 1 risk point to both the disability and life scores.
+test_case_9: user dependents is greater than 0
+{
+    "age": 29,
+    "dependents": 2,
+    "house": {"ownership_status":"owned"},
+    "income": 500,
+    "marital_status": "married",
+    "risk_questions": [1, 1, 1],
+    "vehicle": {"year": 2000}
+}
+expect disability and life risk_score to be equals to 4
+
+#If the user is married, add 1 risk point to the life score and remove 1 risk point from disability.
+test_case_10: user marital_status is married
+{
+    "age": 29,
+    "dependents": 2,
+    "house": {"ownership_status":"owned"},
+    "income": 500,
+    "marital_status": "married",
+    "risk_questions": [1, 1, 1],
+    "vehicle": {"year": 2000}
+}
+expect life risk_score to be equals to 4 and disability risk_score to be equals to 2
+
+#If the user's vehicle was produced in the last 5 years, add 1 risk point to that vehicle’s score.
+test_case_11: user vehicle year is 2 years less than current year
+{
+    "age": 29,
+    "dependents": 2,
+    "house": {"ownership_status":"owned"},
+    "income": 500,
+    "marital_status": "married",
+    "risk_questions": [1, 1, 1],
+    "vehicle": {"year": 2000}
+}
+expect auto risk_score to be equals to 4
