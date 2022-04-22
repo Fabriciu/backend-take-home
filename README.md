@@ -33,9 +33,32 @@ To get this project running, you must have installed:
 Then, in the source folder (src), run the application by typing the command into your command line:
     ``python3 app.py``
 
+
+    src fabricioborgatto$: python3 app.py 
+    * Serving Flask app 'app' (lazy loading)
+    * Environment: production
+    WARNING: This is a development server. Do not use it in a production deployment.
+    Use a production WSGI server instead.
+    * Debug mode: on
+    * Running on http://127.0.0.1:5000 (Press CTRL+C to quit)
+    * Restarting with stat
+    * Debugger is active!
+    * Debugger PIN: 263-840-006
+
+
 This will start the application within the Flask server in the localhost and port 5000.
 
 To run the tests, just run the command ``python3 test.py``
+
+    src fabricioborgatto$ python3 test.py
+    test.py:415: DeprecationWarning: Please use assertEqual instead.
+    self.assertEquals(risk_profile_output["auto"], "ineligible")
+    ................
+    ----------------------------------------------------------------------
+    Ran 16 tests in 0.004s
+
+    OK
+
 
 ## How to call the API
 
