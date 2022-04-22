@@ -35,6 +35,8 @@ Then, in the source folder (src), run the application by typing the command into
 
 This will start the application within the Flask server in the localhost and port 5000.
 
+To run the tests, just run the command ``python3 test.py``
+
 ## How to call the API
 
 Here is a code snippet for a HTTP Request
